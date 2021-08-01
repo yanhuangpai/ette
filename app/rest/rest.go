@@ -123,12 +123,12 @@ func RunHTTPServer(_db *gorm.DB, _status *d.StatusHolder, _redisClient *redis.Cl
 
 		// Checking if user has crossed allowed rate limit or not
 		// If yes, we're dropping request
-		if !db.IsUnderRateLimit(_db, user.Address) {
-			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
-				"msg": "Crossed Allowed Rate Limit",
-			})
-			return
-		}
+		// if !db.IsUnderRateLimit(_db, user.Address) {
+		// 	c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
+		// 		"msg": "Crossed Allowed Rate Limit",
+		// 	})
+		// 	return
+		// }
 
 		c.Next()
 
