@@ -35,8 +35,7 @@ create table transactions (
     cost varchar not null,
     nonce bigint not null,
     state smallint not null,
-    blockhash char(66) not null,
-    foreign key (blockhash) references blocks(hash)
+    blockhash char(66) not null
 );
 
 create index on transactions(from);
@@ -52,9 +51,7 @@ create table events (
     data bytea,
     txhash char(66) not null,
     blockhash char(66) not null,
-    primary key (blockhash, index),
-    foreign key (txhash) references transactions(hash),
-    foreign key (blockhash) references blocks(hash)
+    primary key (blockhash, index)
 );
 
 create index on events(origin);
@@ -75,7 +72,7 @@ create table delivery_history (
     client char(42) not null,
     ts timestamp not null,
     endpoint varchar(100) not null,
-    datalength bigint not null,
+    datalength bigint not null
 );
 
 create index on delivery_history(client);
@@ -89,8 +86,7 @@ create table subscription_plans (
 
 create table subscription_details (
     address char(42) primary key,
-    subscriptionplan int not null,
-    foreign key (subscriptionplan) references subscription_plans(id)
+    subscriptionplan int not null
 );
 
 create index on subscription_details(subscriptionplan);
