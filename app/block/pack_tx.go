@@ -17,7 +17,7 @@ func BuildPackedTx(tx *types.Transaction, sender common.Address, receipt *types.
 
 		packedTx.Tx = &db.Transactions{
 			Hash:      tx.Hash().Hex(),
-			From:      tx.From().Hex(),
+			From:      sender.Hex(),
 			Contract:  receipt.ContractAddress.Hex(),
 			Value:     tx.Value().String(),
 			Data:      tx.Data(),
@@ -33,7 +33,7 @@ func BuildPackedTx(tx *types.Transaction, sender common.Address, receipt *types.
 
 		packedTx.Tx = &db.Transactions{
 			Hash:      tx.Hash().Hex(),
-			From:      tx.From().Hex(),
+			From:      sender.Hex(),
 			To:        tx.To().Hex(),
 			Value:     tx.Value().String(),
 			Data:      tx.Data(),
