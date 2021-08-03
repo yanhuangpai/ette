@@ -753,6 +753,30 @@ func RunHTTPServer(_db *gorm.DB, _status *d.StatusHolder, _redisClient *redis.Cl
 			}
 
 			// Given block number range & account, can find out all tx performed
+			// all account
+			if fromBlock != "" && toBlock != "" && fromAccount == "" && toAccount == "" {
+
+				_fromBlock, _toBlock, err := cmn.RangeChecker(fromBlock, toBlock, cfg.GetBlockNumberRange())
+				if err != nil {
+					c.JSON(http.StatusBadRequest, gin.H{
+						"msg": "Bad block number range",
+					})
+					return
+				}
+
+				if tx := db.GetTransactionsAllAccountByBlockNumberRange(_db, _fromBlock, _toBlock); tx != nil {
+					respondWithJSON(tx.ToJSON(), c)
+					return
+				}
+
+				c.JSON(http.StatusNotFound, gin.H{
+					"msg": "Not found",
+				})
+				return
+
+			}
+
+			// Given block number range & account, can find out all tx performed
 			// from account
 			if fromBlock != "" && toBlock != "" && strings.HasPrefix(fromAccount, "0x") && len(fromAccount) == 42 {
 
