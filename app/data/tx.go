@@ -45,15 +45,15 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 	age := uint64(sec) - t.Timestamp
 	// When tx doesn't create contract i.e. normal tx
 	if !strings.HasPrefix(t.Contract, "0x") {
-		return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"to":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"age":%d}`,
+		return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"to":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"timestamp":%d,"age":%d}`,
 			t.Hash, t.From, t.To, t.Value,
-			data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash, t.BlockNumber, age)), nil
+			data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash, t.BlockNumber, t.Timestamp, age)), nil
 	}
 
 	// When tx creates contract
-	return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"contract":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"age":%d}`,
+	return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"contract":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"timestamp":%d,"age":%d}`,
 		t.Hash, t.From, t.Contract, t.Value,
-		data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash, t.BlockNumber, age)), nil
+		data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash, t.BlockNumber, t.Timestamp, age)), nil
 
 }
 
