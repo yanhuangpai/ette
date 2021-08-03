@@ -24,7 +24,7 @@ type Transaction struct {
 	State       uint64 `json:"state" gorm:"column:state"`
 	BlockHash   string `json:"blockHash" gorm:"column:blockhash"`
 	BlockNumber uint64 `json:"blockNumber" gorm:"column:blocknumber"`
-	Timestamp   int64  `json:"timestamp" gorm:"column:timestamp"`
+	Timestamp   uint64 `json:"timestamp" gorm:"column:timestamp"`
 }
 
 // MarshalBinary - Implementing binary marshalling function, to be invoked
@@ -42,7 +42,7 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 	}
 	now := time.Now() // current local time
 	sec := now.Unix() // number of seconds since January 1, 1970 UTC
-	age := sec - t.Timestamp
+	age := uint64(sec) - t.Timestamp
 	// When tx doesn't create contract i.e. normal tx
 	if !strings.HasPrefix(t.Contract, "0x") {
 		return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"to":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"age":%d}`,
