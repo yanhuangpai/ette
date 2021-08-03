@@ -174,23 +174,28 @@ func RunHTTPServer(_db *gorm.DB, _status *d.StatusHolder, _redisClient *redis.Cl
 		gin.SetMode(gin.DebugMode)
 	}
 
-	router := gin.Default()
 	activeSubscriptions := d.ActiveSubscriptions{Count: 0}
 
 	// enabled cors
+	router := gin.Default()
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowCredentials = true
+	config.AddAllowHeaders("apikey")
+	router.Use(cors.New(config))
 	// router.Use(cors.Default())
-	router.Use(cors.New(cors.Config{
-		// AllowOrigins:     []string{"https://foo.com"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
-		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		AllowAllOrigins:  true,
-		// AllowOriginFunc: func(origin string) bool {
-		// 	return origin == "https://github.com"
-		// },
-		MaxAge: 12 * time.Hour,
-	}))
+	// router.Use(cors.New(cors.Config{
+	// 	AllowOrigins:     []string{"*"},
+	// 	AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
+	// 	AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type"},
+	// 	ExposeHeaders:    []string{"Content-Length"},
+	// 	AllowCredentials: true,
+	// 	AllowAllOrigins:  true,
+	// 	// AllowOriginFunc: func(origin string) bool {
+	// 	// 	return origin == "https://github.com"
+	// 	// },
+	// 	MaxAge: 12 * time.Hour,
+	// }))
 
 	router.HTMLRender = ginview.New(goview.Config{
 		Root:         "./views",
