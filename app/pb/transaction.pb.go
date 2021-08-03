@@ -165,6 +165,13 @@ func (x *Transaction) GetBlockNumber() uint64 {
 	return 0
 }
 
+func (x *Transaction) GetTimestamp() uint64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
 func (x *Transaction) GetEvents() []*Event {
 	if x != nil {
 		return x.Events

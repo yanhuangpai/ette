@@ -241,7 +241,7 @@ func GetTransactionsAllAccountByBlockNumberRange(db *gorm.DB, from uint64, to ui
 func GetTransactionsFromAccountByBlockNumberRange(db *gorm.DB, account common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and blocks.number >= ? and blocks.number <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and blocks.number >= ? and blocks.number <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -269,7 +269,7 @@ func GetTransactionCountFromAccountByBlockTimeRange(db *gorm.DB, account common.
 func GetTransactionsFromAccountByBlockTimeRange(db *gorm.DB, account common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and blocks.time >= ? and blocks.time <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and blocks.time >= ? and blocks.time <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -297,7 +297,7 @@ func GetTransactionCountToAccountByBlockNumberRange(db *gorm.DB, account common.
 func GetTransactionsToAccountByBlockNumberRange(db *gorm.DB, account common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.to = ? and blocks.number >= ? and blocks.number <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.to = ? and blocks.number >= ? and blocks.number <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -325,7 +325,7 @@ func GetTransactionCountToAccountByBlockTimeRange(db *gorm.DB, account common.Ad
 func GetTransactionsToAccountByBlockTimeRange(db *gorm.DB, account common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.to = ? and blocks.time >= ? and blocks.time <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.to = ? and blocks.time >= ? and blocks.time <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -353,7 +353,7 @@ func GetTransactionCountBetweenAccountsByBlockNumberRange(db *gorm.DB, fromAccou
 func GetTransactionsBetweenAccountsByBlockNumberRange(db *gorm.DB, fromAccount common.Address, toAccount common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.to = ? and blocks.number >= ? and blocks.number <= ?", fromAccount.Hex(), toAccount.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.to = ? and blocks.number >= ? and blocks.number <= ?", fromAccount.Hex(), toAccount.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -381,7 +381,7 @@ func GetTransactionCountBetweenAccountsByBlockTimeRange(db *gorm.DB, fromAccount
 func GetTransactionsBetweenAccountsByBlockTimeRange(db *gorm.DB, fromAccount common.Address, toAccount common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.to = ? and blocks.time >= ? and blocks.time <= ?", fromAccount.Hex(), toAccount.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.to = ? and blocks.time >= ? and blocks.time <= ?", fromAccount.Hex(), toAccount.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -395,7 +395,7 @@ func GetTransactionsBetweenAccountsByBlockTimeRange(db *gorm.DB, fromAccount com
 func GetContractCreationTransactionsFromAccountByBlockNumberRange(db *gorm.DB, account common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.contract <> '' and blocks.number >= ? and blocks.number <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.contract <> '' and blocks.number >= ? and blocks.number <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
@@ -409,7 +409,7 @@ func GetContractCreationTransactionsFromAccountByBlockNumberRange(db *gorm.DB, a
 func GetContractCreationTransactionsFromAccountByBlockTimeRange(db *gorm.DB, account common.Address, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.contract <> '' and blocks.time >= ? and blocks.time <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("transactions.from = ? and transactions.contract <> '' and blocks.time >= ? and blocks.time <= ?", account.Hex(), from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
