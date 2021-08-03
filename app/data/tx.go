@@ -6,22 +6,25 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 )
 
 // Transaction - Transaction holder struct, to be supplied when queried using tx hash
 type Transaction struct {
-	Hash      string `json:"hash" gorm:"column:hash"`
-	From      string `json:"from" gorm:"column:from"`
-	To        string `json:"to" gorm:"column:to"`
-	Contract  string `json:"contract" gorm:"column:contract"`
-	Value     string `json:"value" gorm:"column:value"`
-	Data      []byte `json:"data" gorm:"column:data"`
-	Gas       uint64 `json:"gas" gorm:"column:gas"`
-	GasPrice  string `json:"gasPrice" gorm:"column:gasprice"`
-	Cost      string `json:"cost" gorm:"column:cost"`
-	Nonce     uint64 `json:"nonce" gorm:"column:nonce"`
-	State     uint64 `json:"state" gorm:"column:state"`
-	BlockHash string `json:"blockHash" gorm:"column:blockhash"`
+	Hash        string `json:"hash" gorm:"column:hash"`
+	From        string `json:"from" gorm:"column:from"`
+	To          string `json:"to" gorm:"column:to"`
+	Contract    string `json:"contract" gorm:"column:contract"`
+	Value       string `json:"value" gorm:"column:value"`
+	Data        []byte `json:"data" gorm:"column:data"`
+	Gas         uint64 `json:"gas" gorm:"column:gas"`
+	GasPrice    string `json:"gasPrice" gorm:"column:gasprice"`
+	Cost        string `json:"cost" gorm:"column:cost"`
+	Nonce       uint64 `json:"nonce" gorm:"column:nonce"`
+	State       uint64 `json:"state" gorm:"column:state"`
+	BlockHash   string `json:"blockHash" gorm:"column:blockhash"`
+	BlockNumber uint64 `json:"blockNumber" gorm:"column:blocknumber"`
+	Timestamp   int64  `json:"timestamp" gorm:"column:timestamp"`
 }
 
 // MarshalBinary - Implementing binary marshalling function, to be invoked
@@ -37,18 +40,20 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 	if _h := hex.EncodeToString(t.Data); _h != "" {
 		data = fmt.Sprintf("0x%s", _h)
 	}
-
+	now := time.Now() // current local time
+	sec := now.Unix() // number of seconds since January 1, 1970 UTC
+	age := sec - t.Timestamp
 	// When tx doesn't create contract i.e. normal tx
 	if !strings.HasPrefix(t.Contract, "0x") {
-		return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"to":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q}`,
+		return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"to":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"age":%d}`,
 			t.Hash, t.From, t.To, t.Value,
-			data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash)), nil
+			data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash, t.BlockNumber, age)), nil
 	}
 
 	// When tx creates contract
-	return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"contract":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q}`,
+	return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"contract":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"age":%d}`,
 		t.Hash, t.From, t.Contract, t.Value,
-		data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash)), nil
+		data, t.Gas, t.GasPrice, t.Cost, t.Nonce, t.State, t.BlockHash, t.BlockNumber, age)), nil
 
 }
 
