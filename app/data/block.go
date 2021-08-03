@@ -24,6 +24,7 @@ type Block struct {
 	TransactionRootHash string  `json:"txRootHash" gorm:"column:txroothash"`
 	ReceiptRootHash     string  `json:"receiptRootHash" gorm:"column:receiptroothash"`
 	ExtraData           []byte  `json:"extraData" gorm:"column:extradata"`
+	TxNum               uint64  `json:"tx_num" gorm:"column:tx_num"`
 }
 
 // MarshalBinary - Implementing binary marshalling function, to be invoked
@@ -40,7 +41,7 @@ func (b *Block) MarshalJSON() ([]byte, error) {
 		extraData = fmt.Sprintf("0x%s", _h)
 	}
 
-	return []byte(fmt.Sprintf(`{"hash":%q,"number":%d,"time":%d,"parentHash":%q,"difficulty":%q,"gasUsed":%d,"gasLimit":%d,"nonce":%q,"miner":%q,"size":%f,"stateRootHash":%q,"uncleHash":%q,"txRootHash":%q,"receiptRootHash":%q,"extraData":%q}`,
+	return []byte(fmt.Sprintf(`{"hash":%q,"number":%d,"time":%d,"parentHash":%q,"difficulty":%q,"gasUsed":%d,"gasLimit":%d,"nonce":%q,"txNum":%d,"miner":%q,"size":%f,"stateRootHash":%q,"uncleHash":%q,"txRootHash":%q,"receiptRootHash":%q,"extraData":%q}`,
 		b.Hash,
 		b.Number,
 		b.Time,
@@ -49,6 +50,7 @@ func (b *Block) MarshalJSON() ([]byte, error) {
 		b.GasUsed,
 		b.GasLimit,
 		b.Nonce,
+		b.TxNum,
 		b.Miner,
 		b.Size,
 		b.StateRootHash,
