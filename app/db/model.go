@@ -61,18 +61,20 @@ func (b *Blocks) SimilarTo(_b *Blocks) bool {
 
 // Transactions - Blockchain transaction holder table model
 type Transactions struct {
-	Hash      string `gorm:"column:hash;type:char(66);primaryKey"`
-	From      string `gorm:"column:from;type:char(42);not null;index"`
-	To        string `gorm:"column:to;type:char(42);index"`
-	Contract  string `gorm:"column:contract;type:char(42);index"`
-	Value     string `gorm:"column:value;type:varchar"`
-	Data      []byte `gorm:"column:data;type:bytea"`
-	Gas       uint64 `gorm:"column:gas;type:bigint;not null"`
-	GasPrice  string `gorm:"column:gasprice;type:varchar;not null"`
-	Cost      string `gorm:"column:cost;type:varchar;not null"`
-	Nonce     uint64 `gorm:"column:nonce;type:bigint;not null;index"`
-	State     uint64 `gorm:"column:state;type:smallint;not null"`
-	BlockHash string `gorm:"column:blockhash;type:char(66);not null;index"`
+	Hash        string `gorm:"column:hash;type:char(66);primaryKey"`
+	From        string `gorm:"column:from;type:char(42);not null;index"`
+	To          string `gorm:"column:to;type:char(42);index"`
+	Contract    string `gorm:"column:contract;type:char(42);index"`
+	Value       string `gorm:"column:value;type:varchar"`
+	Data        []byte `gorm:"column:data;type:bytea"`
+	Gas         uint64 `gorm:"column:gas;type:bigint;not null"`
+	GasPrice    string `gorm:"column:gasprice;type:varchar;not null"`
+	Cost        string `gorm:"column:cost;type:varchar;not null"`
+	Nonce       uint64 `gorm:"column:nonce;type:bigint;not null;index"`
+	State       uint64 `gorm:"column:state;type:smallint;not null"`
+	BlockHash   string `gorm:"column:blockhash;type:char(66);not null;index"`
+	BlockNumber uint64 `gorm:"column:blocknumber;type:bigint(20);default 0"`
+	Timestamp   uint64 `gorm:"column:timestamp;type:int(11);default 0"`
 	// Events    Events `gorm:"foreignKey:txhash"`
 }
 

@@ -25,19 +25,21 @@ type Transaction struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Hash      string   `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
-	From      string   `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
-	To        string   `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
-	Contract  string   `protobuf:"bytes,4,opt,name=contract,proto3" json:"contract,omitempty"`
-	Value     string   `protobuf:"bytes,5,opt,name=value,proto3" json:"value,omitempty"`
-	Data      []byte   `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty"`
-	Gas       uint64   `protobuf:"varint,7,opt,name=gas,proto3" json:"gas,omitempty"`
-	GasPrice  string   `protobuf:"bytes,8,opt,name=gas_price,json=gasPrice,proto3" json:"gas_price,omitempty"`
-	Cost      string   `protobuf:"bytes,9,opt,name=cost,proto3" json:"cost,omitempty"`
-	Nonce     uint64   `protobuf:"varint,10,opt,name=nonce,proto3" json:"nonce,omitempty"`
-	State     uint64   `protobuf:"varint,11,opt,name=state,proto3" json:"state,omitempty"`
-	BlockHash string   `protobuf:"bytes,12,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty"`
-	Events    []*Event `protobuf:"bytes,13,rep,name=events,proto3" json:"events,omitempty"`
+	Hash        string   `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
+	From        string   `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
+	To          string   `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
+	Contract    string   `protobuf:"bytes,4,opt,name=contract,proto3" json:"contract,omitempty"`
+	Value       string   `protobuf:"bytes,5,opt,name=value,proto3" json:"value,omitempty"`
+	Data        []byte   `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty"`
+	Gas         uint64   `protobuf:"varint,7,opt,name=gas,proto3" json:"gas,omitempty"`
+	GasPrice    string   `protobuf:"bytes,8,opt,name=gas_price,json=gasPrice,proto3" json:"gas_price,omitempty"`
+	Cost        string   `protobuf:"bytes,9,opt,name=cost,proto3" json:"cost,omitempty"`
+	Nonce       uint64   `protobuf:"varint,10,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	State       uint64   `protobuf:"varint,11,opt,name=state,proto3" json:"state,omitempty"`
+	BlockHash   string   `protobuf:"bytes,12,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty"`
+	BlockNumber uint64   `protobuf:"varint,10,opt,name=block_number,json=blockNumber" json:"block_number,omitempty"`
+	Timestamp   uint64   `protobuf:"varint,10,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Events      []*Event `protobuf:"bytes,13,rep,name=events,proto3" json:"events,omitempty"`
 }
 
 func (x *Transaction) Reset() {
@@ -154,6 +156,13 @@ func (x *Transaction) GetBlockHash() string {
 		return x.BlockHash
 	}
 	return ""
+}
+
+func (x *Transaction) GetBlockNumber() uint64 {
+	if x != nil {
+		return x.BlockNumber
+	}
+	return 0
 }
 
 func (x *Transaction) GetEvents() []*Event {

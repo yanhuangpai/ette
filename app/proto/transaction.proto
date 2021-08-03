@@ -16,5 +16,7 @@ message Transaction {
     uint64 nonce = 10;
     uint64 state = 11;
     string block_hash = 12;
-    repeated Event events = 13;
+    uint64 block_number = 13;
+    uint64 timestamp = 14;
+    repeated Event events = 15;
 }

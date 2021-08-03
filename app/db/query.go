@@ -227,7 +227,7 @@ func GetTransactionCountFromAccountByBlockNumberRange(db *gorm.DB, account commo
 func GetTransactionsAllAccountByBlockNumberRange(db *gorm.DB, from uint64, to uint64) *data.Transactions {
 	var tx []*data.Transaction
 
-	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("blocks.number >= ? and blocks.number <= ?", from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blockNumber, transactions.timestamp").Find(&tx).Error; err != nil {
+	if err := db.Model(&Transactions{}).Joins("left join blocks on transactions.blockhash = blocks.hash").Where("blocks.number >= ? and blocks.number <= ?", from, to).Select("transactions.hash, transactions.from, transactions.to, transactions.contract, transactions.gas, transactions.gasprice, transactions.cost, transactions.nonce, transactions.state, transactions.blockhash, transactions.blocknumber, transactions.timestamp").Find(&tx).Error; err != nil {
 		return nil
 	}
 
