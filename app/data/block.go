@@ -40,7 +40,10 @@ func (b *Block) MarshalJSON() ([]byte, error) {
 	if _h := hex.EncodeToString(b.ExtraData); _h != "" {
 		extraData = fmt.Sprintf("0x%s", _h)
 	}
-
+	realTx := b.TxNum
+	if b.Size > 610 && b.Size < 850 {
+		realTx = 1
+	}
 	return []byte(fmt.Sprintf(`{"hash":%q,"number":%d,"time":%d,"parentHash":%q,"difficulty":%q,"gasUsed":%d,"gasLimit":%d,"nonce":%q,"txNum":%d,"miner":%q,"size":%f,"stateRootHash":%q,"uncleHash":%q,"txRootHash":%q,"receiptRootHash":%q,"extraData":%q}`,
 		b.Hash,
 		b.Number,
@@ -50,7 +53,7 @@ func (b *Block) MarshalJSON() ([]byte, error) {
 		b.GasUsed,
 		b.GasLimit,
 		b.Nonce,
-		b.TxNum,
+		realTx,
 		b.Miner,
 		b.Size,
 		b.StateRootHash,
