@@ -42,7 +42,7 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 	}
 	now := time.Now() // current local time
 	sec := now.Unix() // number of seconds since January 1, 1970 UTC
-	timestamp := int64(t.Timestamp) + int64(2757251)
+	timestamp := int64(t.Timestamp)
 	age := sec - timestamp
 	// When tx doesn't create contract i.e. normal tx
 	if !strings.HasPrefix(t.Contract, "0x") {
