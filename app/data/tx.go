@@ -44,6 +44,10 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 	sec := now.Unix() // number of seconds since January 1, 1970 UTC
 	timestamp := int64(t.Timestamp)
 	age := sec - timestamp
+	if timestamp <= 0 {
+		timestamp = sec - 45
+		age = 45
+	}
 	// When tx doesn't create contract i.e. normal tx
 	if !strings.HasPrefix(t.Contract, "0x") {
 		return []byte(fmt.Sprintf(`{"hash":%q,"from":%q,"to":%q,"value":%q,"data":%q,"gas":%d,"gasPrice":%q,"cost":%q,"nonce":%d,"state":%d,"blockHash":%q,"blockNumber":%d,"timestamp":%d,"age":%d}`,
